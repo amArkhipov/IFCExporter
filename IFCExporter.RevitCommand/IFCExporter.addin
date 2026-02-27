@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+	<AddIn Type="Command">
+		<Name>IFCExporter</Name>
+		<Assembly>IFCExporter\IFCExporter.RevitCommand.dll</Assembly>
+		<AddInId>fcb2bd11-0f76-43c9-8268-2f912a598ff1</AddInId>
+		<FullClassName>IFCExporter.RevitCommand.IFCExporterCommand</FullClassName>
+		<Text>IFCExporter</Text>
+		<VendorId>None</VendorId>
+		<VendorDescription>None</VendorDescription>
+	</AddIn>
+</RevitAddIns>
