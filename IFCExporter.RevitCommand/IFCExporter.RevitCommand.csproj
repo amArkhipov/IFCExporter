@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	 <LangVersion>10.0</LangVersion>
     <TargetFramework>net48</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -8,6 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="Autodesk.Revit.SDK" Version="2022.0.2.392" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="IFCExporter.addin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
