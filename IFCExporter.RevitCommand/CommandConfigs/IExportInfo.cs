@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IFCExporter.RevitCommand
 {
-    internal interface IExportInfo
+    public interface IExportInfo
     {
         string Name { get; }
         string FilePath { get; }

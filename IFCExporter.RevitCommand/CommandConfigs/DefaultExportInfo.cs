@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IFCExporter.RevitCommand
 {
-    internal readonly struct DefaultExportInfo : IExportInfo
+    public readonly struct DefaultExportInfo : IExportInfo
     {
         public string Name => Path.GetRandomFileName();
 
