@@ -9,10 +9,15 @@ namespace IFCExporter.RevitCommand
 {
     public readonly struct DefaultExportInfo : IExportInfo
     {
-        public string Name => Path.GetRandomFileName();
+        public DefaultExportInfo()
+        {
+            Name = Path.GetRandomFileName();
+            FilePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            ExportOptions = new IFCExportOptions();
+        }
 
-        public string FilePath => Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-        public IFCExportOptions ExportOptions => new IFCExportOptions();
+        public readonly string Name { get; }
+        public readonly string FilePath { get; }
+        public readonly IFCExportOptions ExportOptions { get; }
     }
 }
