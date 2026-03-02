@@ -1,7 +1,6 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Text;
 
 namespace IFCExporter.RevitCommand
 {
@@ -17,9 +16,10 @@ namespace IFCExporter.RevitCommand
 
             var exportInfo = new DefaultExportInfo();
             var logger = new Logger();
+            Dictionary<string, string> replacements;
             try
             {
-                Dictionary<string, string> replacements = LevelMapping(document);
+                replacements = LevelMapping(document);
                 ExportIFC(document, exportInfo);
                 LevelReplacing(exportInfo, replacements);
 
@@ -41,13 +41,16 @@ namespace IFCExporter.RevitCommand
 
             var levelReader = new LevelReader(document);
             var levelMapper = new MGEMapper();
+            var encoder = new KirillicEncoder();
 
             var levels = levelReader
                 .ReadAll()
                 .Select(v => new KeyValuePair<string, string>(v.Name, levelMapper.Map(v.Name)))
                 .ToList();
 
-            return levels.ToDictionary(kv => EncodeToEscapeSequence(kv.Key), kv => EncodeToEscapeSequence(kv.Value));
+            return levels.ToDictionary
+                (kv => encoder.EncodeToEscapeSequence(kv.Key),
+                kv => encoder.EncodeToEscapeSequence(kv.Value));
         }
 
         private void LevelReplacing(DefaultExportInfo exportInfo, Dictionary<string, string> replacements)
@@ -64,38 +67,6 @@ namespace IFCExporter.RevitCommand
             // Записываем изменённый контент обратно в файл
             File.WriteAllText(pathToIFC, content);
 
-        }
-        public static string EncodeToEscapeSequence(string text)
-        {
-            StringBuilder builder = new StringBuilder();
-            for (var i = 0; i < text.Length;)
-            {
-                if (IsKirillicSymbol(text[i])) // Проверяем, является ли символ кириллическим
-                {
-                    builder.Append(@"\X2\");
-                    while (i < text.Length && IsKirillicSymbol(text[i]))
-                    {
-                        ushort codePoint = (ushort)text[i];
-                        // Форматируем число в четырехзначный HEX
-                        string hexCode = codePoint.ToString("X4");
-                        builder.Append(hexCode);
-                        i++;
-                    }
-                    builder.Append(@"\X0\");
-                }
-                else
-                {
-                    builder.Append(text[i]); // Оставляем остальные символы неизменёнными
-                    i++;
-                }
-            }
-            return builder.ToString();
-        }
-
-        private static bool IsKirillicSymbol(char ch)
-        {
-            // Диапазоны для кириллического диапазона Unicode
-            return (ch >= '\u0400' && ch <= '\u04FF');
         }
 
         private void ExportIFC(Document document, DefaultExportInfo exportInfo)
