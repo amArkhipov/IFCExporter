@@ -1,13 +1,6 @@
 ﻿using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using IFCExporter.RevitCommand.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace IFCExporter.RevitCommand.LevelReader
+namespace IFCExporter.RevitCommand
 {
     public class LevelReader : ILevelReader
     {
