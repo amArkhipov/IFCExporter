@@ -51,7 +51,7 @@ namespace IFCExporter.RevitCommand
 
         private bool IsBaseLevel(string nameLavel)
         {
-            return Regex.IsMatch(nameLavel, @"этаж\b", RegexOptions.IgnoreCase) &&
+            return Regex.IsMatch(nameLavel, @"этаж\w*\b", RegexOptions.IgnoreCase) &&
                !Regex.IsMatch(nameLavel, @"тех\w+\b", RegexOptions.IgnoreCase);
         }
 
